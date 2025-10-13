@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" lang="en">
+<body>
+<main layout:fragment="content" class="container my-4">
+  <h2 id="form-title">Student Form</h2>
+
+  <!-- Global error container -->
+  <div id="form-error"></div>
+
+  <form id="studentForm" class="mt-4">
+    <input type="hidden" id="studentId">
+
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <input type="text" id="course" name="course" class="form-control" required>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-success">Save</button>
+      <a href="/students" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+  </form>
+</main>
+
+<!-- JS Module -->
+<script type="module" th:src="@{/js/students/student-form.js}"></script>
+</body>
+</html>

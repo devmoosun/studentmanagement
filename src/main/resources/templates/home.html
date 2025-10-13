@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<main layout:fragment="content">
+    <div class="text-center">
+        <h2 id="home-title">Loading...</h2>
+        <p id="home-desc" class="lead text-muted"></p>
+    </div>
+</main>
+
+<script type="module">
+    import { setPageMeta } from '/js/meta.js';
+    fetch('/api/meta/home')
+        .then(res => res.json())
+        .then(meta => {
+            setPageMeta(meta);
+            document.getElementById('home-title').innerText = meta.title;
+            document.getElementById('home-desc').innerText = meta.description;
+        })
+        .catch(err => console.error('Failed to load meta', err));
+</script>
+</body>
+</html>

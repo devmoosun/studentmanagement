@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" lang="en">
+<body>
+<main layout:fragment="content" class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 id="page-heading">All Students</h2>
+    <a href="/students/new" class="btn btn-primary">Add Student</a>
+  </div>
+
+
+  <table class="table table-striped align-middle table-hover table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="s : ${students}">
+      <td th:text="${s.id}"></td>
+      <td th:text="${s.firstName}"></td>
+      <td th:text="${s.lastName}"></td>
+      <td th:text="${s.email}"></td>
+
+      <td class="text-end">
+        <a th:href="@{/students/{id}/edit(id=${s.id})}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+        <button class="btn btn-sm btn-outline-danger" data-id="${s.id}">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+
+<!-- JS Module -->
+<script type="module" th:src="@{/js/students/students.js}"></scr

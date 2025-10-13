@@ -1,0 +1,74 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" lang="en">
+<body>
+<main layout:fragment="content" class="container my-4">
+  <h2 id="form-title">Student Form</h2>
+
+  <!-- Global error container -->
+  <div id="form-error"></div>
+
+  <form
+          class="mt-4"
+          method="POST"
+          th:action="@{/students}"
+          th:object="${student}"
+  >
+
+
+    <div class="mb-3">
+      <label for="firstName" class="form-label">First Name</label>
+      <input
+              type="text"
+              th:field="*{firstName}"
+              id="firstName"
+              name="firstName"
+              placeholder="Enter first name"
+              class="form-control"
+              required>
+
+      <p th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></p>
+    </div>
+
+    <div class="mb-3">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input
+              type="text"
+              th:field="*{lastName}"
+              id="lastName"
+              name="lastName"
+              placeholder="Enter last name"
+              class="form-control"
+              required>
+
+      <p th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></p>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+              type="email"
+              th:field="*{email}"
+              id="email"
+              name="email"
+              placeholder="Enter email"
+              class="form-control"
+              required>
+
+      <p th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></p>
+
+    </div>
+
+
+
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-success">Save</button>
+      <a href="/students" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+  </form>
+</main>
+
+<!-- JS Module -->
+<script type="module" th:src="@{/js/students/student-form.js}"></script>
+</body>
+</html>

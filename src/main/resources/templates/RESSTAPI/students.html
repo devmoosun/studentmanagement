@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" lang="en">
+<body>
+<main layout:fragment="content" class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 id="page-heading">All Students</h2>
+    <a href="/students/new" class="btn btn-primary">Add Student</a>
+  </div>
+
+  <div id="alert-container"></div>
+
+  <table class="table table-striped align-middle" id="students-table">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="students-body"></tbody>
+  </table>
+</main>
+
+<!-- JS Module -->
+<script type="module" th:src="@{/js/students/students.js}"></script>
+</body>
+</html>
