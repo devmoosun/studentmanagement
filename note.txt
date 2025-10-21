@@ -1,0 +1,13 @@
+mysql://root:VeUhSZByHcCNDCMYmjrHIvSyiIHHgkYu@interchange.proxy.rlwy.net:30016/railway
+
+
+
+jdbc:mysql://?useSSL=false
+
+
+DB_URL=jdbc:mysql://interchange.proxy.rlwy.net:30016/student_management?sslMode=VERIFY_IDENTITY
+DB_USER=root
+DB_PASS=VeUhSZByHcCNDCMYmjrHIvSyiIHHgkYu
+
+
+aa

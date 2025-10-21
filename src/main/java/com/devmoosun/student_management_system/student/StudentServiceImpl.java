@@ -1,8 +1,13 @@
 package com.devmoosun.student_management_system.student;
 
+import com.devmoosun.student_management_system.role.Role;
+import com.devmoosun.student_management_system.role.RoleRepository;
+import com.devmoosun.student_management_system.role.RoleService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +17,9 @@ public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
     private StudentMapper studentMapper;
+    private RoleRepository roleRepository;
+    private RoleService roleService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public List<StudentResponseDto> getAll() {
@@ -23,8 +31,21 @@ public class StudentServiceImpl implements StudentService {
     public void createStudent(StudentRequestDto studentRequestDto) {
 
         Student student = studentMapper.mapToEntity(studentRequestDto);
+        student.setPassword(bCryptPasswordEncoder.encode(studentRequestDto.getPassword()));
+
+       Role role = roleRepository.findByName("ROLE_ADMIN");
+
+       if(role == null) {
+           roleService.checkRoleExists();
+       }
+
+       student.setRoles(Arrays.asList(role));
+//       student.getRoles().add(role);
+
         studentRepository.save(student);
     }
+
+
 
     @Override
     public StudentResponseDto getStudentById(Long id) {
@@ -37,4 +58,17 @@ public class StudentServiceImpl implements StudentService {
 
         studentRepository.save(studentMapper.mapToEntity(studentRequestDto));
     }
+
+    @Override
+    public void deleteStudent(Long id) {
+
+        studentRepository.deleteById(id);
+    }
+
+    @Override
+    public Student findStudentByEmail(String email) {
+       return studentRepository.findByEmail(email);
+    }
+
+
 }

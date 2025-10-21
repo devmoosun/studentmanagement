@@ -29,7 +29,8 @@
 
       <td class="text-end">
         <a th:href="@{/students/{id}/edit(id=${s.id})}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
-        <button class="btn btn-sm btn-outline-danger" data-id="${s.id}">Delete</button>
+        <a th:href="@{/students/{id}/delete(id=${s.id})}" class="btn btn-sm btn-outline-danger">Delete</a>
+        <a th:href="@{/students/{id}/view(id=${s.id})}" class="btn btn-sm btn-outline-info">View</a>
       </td>
     </tr>
     </tbody>

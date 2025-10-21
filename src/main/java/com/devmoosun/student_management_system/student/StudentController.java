@@ -61,16 +61,12 @@ public class StudentController {
         studentService.createStudent(studentRequestDto);
         return "redirect:/students";
     }
-
-
     //edit
 
     @GetMapping("/students/{id}/edit")
-    public String editStudent( @PathVariable Long id, Model model) {
-
+    public String editStudent(@PathVariable Long id, Model model) {
         StudentResponseDto studentResponseDto = studentService.getStudentById(id);
         model.addAttribute("student", studentResponseDto);
-
         return "edit_student";
     }
 
@@ -79,19 +75,31 @@ public class StudentController {
                                 @Valid @ModelAttribute("student") StudentRequestDto studentRequestDto,
                                 BindingResult result,
                                 Model model
-                                    ) {
-
+    ) {
         if (result.hasErrors()) {
             model.addAttribute("student", studentRequestDto);
-
             return "edit_student";
         }
-
         studentRequestDto.setId(id);
         studentService.updateStudent(studentRequestDto);
-
         return "redirect:/students";
 
+    }
+
+    // handle delete request
+    @GetMapping("/students/{id}/delete")
+    public String deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+
+        return "redirect:/students";
+    }
+    // handle view request
+    @GetMapping("/students/{id}/view")
+    public String viewStudent(@PathVariable Long id, Model model) {
+      StudentResponseDto studentResponseDto = studentService.getStudentById(id);
+      model.addAttribute("student", studentResponseDto);
+
+        return "view_student";
     }
 
 
