@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +38,10 @@ public class StudentServiceImpl implements StudentService {
        if(role == null) {
            roleService.checkRoleExists();
        }
+        assert role != null;
+        student.setRoles(new ArrayList<>(List.of(role)));
 
-       student.setRoles(Arrays.asList(role));
+//       student.setRoles(Arrays.asList(role));
 //       student.getRoles().add(role);
 
         studentRepository.save(student);
