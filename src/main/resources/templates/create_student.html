@@ -60,6 +60,22 @@
     </div>
 
 
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+              type="password"
+              th:field="*{password}"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              class="form-control"
+              required>
+
+      <!--        <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>-->
+
+    </div>
+
+
 
     <div class="d-flex gap-2">
       <button type="submit" class="btn btn-success">Save</button>

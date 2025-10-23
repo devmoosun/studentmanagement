@@ -36,13 +36,13 @@ public class StudentController {
     //handler method
     @GetMapping("/students/new")
     public String newStudent(Model model) {
-        StudentResponseDto studentResponseDto = new StudentResponseDto();
+        StudentRequestDto studentRequestDto = new StudentRequestDto();
         model.addAttribute("meta", new PageMeta(
                 "Create Student",
                 "Welcome to the Student Management System.",
                 "students, education, portal"
         ));
-        model.addAttribute("student", studentResponseDto);
+        model.addAttribute("student", studentRequestDto);
         return "create_student";
     }
 
@@ -66,7 +66,15 @@ public class StudentController {
     @GetMapping("/students/{id}/edit")
     public String editStudent(@PathVariable Long id, Model model) {
         StudentResponseDto studentResponseDto = studentService.getStudentById(id);
-        model.addAttribute("student", studentResponseDto);
+        StudentRequestDto studentRequestDto = new StudentRequestDto();
+        studentRequestDto.setId(studentResponseDto.getId());
+        studentRequestDto.setFirstName(studentResponseDto.getFirstName());
+        studentRequestDto.setLastName(studentResponseDto.getLastName());
+        studentRequestDto.setEmail(studentResponseDto.getEmail());
+        // Leave password blank for security (or prefill if appropriate)
+        studentRequestDto.setPassword("empty");
+
+        model.addAttribute("student", studentRequestDto);
         return "edit_student";
     }
 

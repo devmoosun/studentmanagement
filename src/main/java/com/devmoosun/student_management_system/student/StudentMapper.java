@@ -8,7 +8,7 @@ public interface StudentMapper {
 
     StudentResponseDto mapToResponseDto(Student student);
 
-
+//    @Mapping(target = "password", ignore = true)
     Student mapToEntity(StudentRequestDto studentRequestDto);
 
 }

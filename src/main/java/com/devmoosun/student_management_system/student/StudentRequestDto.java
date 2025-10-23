@@ -29,6 +29,8 @@ public class StudentRequestDto {
     @NotEmpty(message = "Cannot be empty")
     private String email;
 
+//    @Size(min = 2, message = "Password cannot be less than 2 characters")
+//    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     private Set<String> roles;

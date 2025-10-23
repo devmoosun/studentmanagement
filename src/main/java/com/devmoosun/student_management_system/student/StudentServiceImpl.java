@@ -29,48 +29,57 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void createStudent(StudentRequestDto studentRequestDto) {
-
         Student student = studentMapper.mapToEntity(studentRequestDto);
         student.setPassword(bCryptPasswordEncoder.encode(studentRequestDto.getPassword()));
-
-       Role role = roleRepository.findByName("ROLE_ADMIN");
-
-       if(role == null) {
-           roleService.checkRoleExists();
-       }
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        if (role == null) {
+            roleService.checkRoleExists();
+        }
         assert role != null;
         student.setRoles(new ArrayList<>(List.of(role)));
-
 //       student.setRoles(Arrays.asList(role));
 //       student.getRoles().add(role);
-
         studentRepository.save(student);
     }
 
 
-
     @Override
     public StudentResponseDto getStudentById(Long id) {
-       Student student = studentRepository.findById(id).get();
+        Student student = studentRepository.findById(id).get();
         return studentMapper.mapToResponseDto(student);
     }
 
     @Override
     public void updateStudent(StudentRequestDto studentRequestDto) {
+        Student student = studentRepository.findById(studentRequestDto.getId()).orElseThrow(() -> new RuntimeException("Not found"));
+        student.setFirstName(studentRequestDto.getFirstName());
+        student.setLastName(studentRequestDto.getLastName());
+        student.setEmail(studentRequestDto.getEmail());
+        updatePasswordIfChanged(student, studentRequestDto.getPassword());
+        studentRepository.save(student);
 
-        studentRepository.save(studentMapper.mapToEntity(studentRequestDto));
+
     }
 
     @Override
     public void deleteStudent(Long id) {
-
         studentRepository.deleteById(id);
     }
 
     @Override
     public Student findStudentByEmail(String email) {
-       return studentRepository.findByEmail(email);
+        return studentRepository.findByEmail(email);
     }
 
 
+    private void updatePasswordIfChanged(Student student, String newPassword) {
+        if (newPassword == null || newPassword.isBlank()) {
+            return;
+        }
+        boolean isSame = bCryptPasswordEncoder.matches(newPassword, student.getPassword());
+        if (!isSame) {
+            student.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        }
+
+    }
 }
